@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">DatabaseUI1</string>
+    <string name="register">Register</string>
+    <string name="regDon">Donner</string>
+    <string name="regAcc">Acceptor</string>
+    <string name="login">Login</string>
+    <string name="name">Name</string>
+    <string name="pass">Password</string>
+    <string name="blood">Blood type</string>
+    <string name="uName">User name</string>
+    <string name="donner">Donner</string>
+    <string name="req">Request</string>
+    <string name="title">Life Share</string>
+    <string name="call">Call</string>
+    <string name="phone">Phone Number</string>
+    <string name="email">E-mail</string>
+    <string name="remove">Remove</string>
+    <string name="add">Add</string>
+    <string name="hos">Hospital</string>
+</resources>
