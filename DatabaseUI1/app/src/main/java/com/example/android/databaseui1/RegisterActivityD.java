@@ -89,7 +89,7 @@ public class RegisterActivityD extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.d("Error.Response", error.getMessage());
-                        Toast.makeText(RegisterActivityD.this,"Connection Error",Toast.LENGTH_LONG).show();
+                        Toast.makeText(RegisterActivityD.this,"Connection Error Can't add Donner",Toast.LENGTH_LONG).show();
 
                     }
                 }

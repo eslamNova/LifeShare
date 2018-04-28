@@ -27,33 +27,39 @@ import java.util.Map;
 public class RegisterActivityA extends AppCompatActivity {
     final  String url = "http://192.168.1.2/ls2/acceptor/";
     RequestQueue requestQueue ;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_a2);
         requestQueue = Volley.newRequestQueue(RegisterActivityA.this);
 
+
         Button register = (Button) findViewById(R.id.register);
+
 
         register.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View view) {
-                addUser(view);
-                Intent registerIntent = new Intent(view.getContext(), RequistesActivity.class);
+                addUser();
+                Intent registerIntent = new Intent(view.getContext(), UserActivity.class);
                 startActivity(registerIntent);
             }
         });
     }
 
 
-    public void addUser(View v){
-        final String name, userName,email, password, phone, bloodType ;
+    public void addUser(){
+        final String name, userName,email, password, phone ;
+
         EditText nameE = (EditText) findViewById(R.id.name);
         EditText userNameE = (EditText) findViewById(R.id.userNameR);
         EditText passE = (EditText) findViewById(R.id.passR);
         EditText emailE = (EditText) findViewById(R.id.emailR);
         EditText phoneE = (EditText) findViewById(R.id.phone);
+
         name = nameE.getText().toString();
         userName = userNameE.getText().toString();
         password = passE.getText().toString();
@@ -87,7 +93,7 @@ public class RegisterActivityA extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.d("Error.Response", error.getMessage());
-                        Toast.makeText(RegisterActivityA.this,"Connection Error",Toast.LENGTH_LONG).show();
+                        Toast.makeText(RegisterActivityA.this,"Connection Error Can't add Acceptor",Toast.LENGTH_LONG).show();
 
                     }
                 }
