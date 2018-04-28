@@ -92,7 +92,7 @@ public class RegisterActivityA extends AppCompatActivity {
                 {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.d("Error.Response", error.getMessage());
+                        // Log.d("Error.Response", error.getMessage());
                         Toast.makeText(RegisterActivityA.this,"Connection Error Can't add Acceptor",Toast.LENGTH_LONG).show();
 
                     }

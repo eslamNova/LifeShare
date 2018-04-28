@@ -26,16 +26,16 @@ import java.util.ArrayList;
 public class LoginActivity extends AppCompatActivity {
     final  String url_D = "http://192.168.1.2/ls2/donner/";
     final  String url_A = "http://192.168.1.2/ls2/acceptor/";
+    private int flag;
     private RequestQueue requestQueue ;
-    private ArrayList<Users> DonnersList;
-    private ArrayList<Users> AcceptorsList;
+    private ArrayList<Users> DonnersList = new ArrayList<>();
+    private ArrayList<Users> AcceptorsList = new ArrayList<>() ;
     private Users currentUser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         requestQueue = Volley.newRequestQueue(LoginActivity.this);
-
 
         getAllDonners();
         getAllAcceptors();
@@ -47,27 +47,32 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 EditText userName = (EditText) findViewById(R.id.userNameLO);
                 EditText pass = (EditText) findViewById(R.id.passLO);
+                flag=0;
                 for (int i=0;i<DonnersList.size();i++){
                     currentUser = DonnersList.get(i);
                     if (currentUser.getUserName().contentEquals(userName.getText()) && currentUser.getPassword().contentEquals(pass.getText())) {
+                        flag=1;
                         Intent reqView = new Intent(view.getContext(), RequistesActivity.class);
                         reqView.putExtra("userName", currentUser.getUserName());
                         startActivity(reqView);
+                        break;
+
                     }
                     else{
                         Toast.makeText(LoginActivity.this,"Wrong user name or password",Toast.LENGTH_LONG).show();
                     }
                 }
-
-                for (int i=0 ; i<AcceptorsList.size() ;i++){
-                    currentUser = AcceptorsList.get(i);
-                    if (currentUser.getUserName().contentEquals(userName.getText()) && currentUser.getPassword().contentEquals(pass.getText())){
-                        Intent reqView = new Intent(view.getContext(), UserActivity.class);
-                        reqView.putExtra("userName", currentUser.getUserName());
-                        startActivity(reqView);
-                    }
-                    else{
-                        Toast.makeText(LoginActivity.this,"Wrong user name or password",Toast.LENGTH_LONG).show();
+                if (flag==0) {
+                    for (int i = 0; i < AcceptorsList.size(); i++) {
+                        currentUser = AcceptorsList.get(i);
+                        if (currentUser.getUserName().contentEquals(userName.getText()) && currentUser.getPassword().contentEquals(pass.getText())) {
+                            Intent reqView = new Intent(view.getContext(), UserActivity.class);
+                            reqView.putExtra("userName", currentUser.getUserName());
+                            startActivity(reqView);
+                            break;
+                        } else {
+                            Toast.makeText(LoginActivity.this, "Wrong user name or password", Toast.LENGTH_LONG).show();
+                        }
                     }
                 }
             }
@@ -87,7 +92,8 @@ public class LoginActivity extends AppCompatActivity {
                                 JSONObject object = jsonArray.getJSONObject(i);
                                 String userName = object.getString("userName") ;
                                 String pass = object.getString("password") ;
-                                DonnersList.add(new Users(userName, pass));
+                                int phone = object.getInt("phone");
+                                DonnersList.add(new Users(userName, pass,phone));
                             }
 
                         } catch (JSONException e) {
@@ -100,7 +106,7 @@ public class LoginActivity extends AppCompatActivity {
                 {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.d("Error.Response", error.getMessage());
+                        // Log.d("Error.Response", error.getMessage());
                         Toast.makeText(LoginActivity.this,"Connection Error Donners",Toast.LENGTH_LONG).show();
 
                     }
@@ -122,7 +128,8 @@ public class LoginActivity extends AppCompatActivity {
                                 JSONObject object = jsonArray.getJSONObject(i);
                                 String userName = object.getString("userName") ;
                                 String pass = object.getString("password") ;
-                                AcceptorsList.add(new Users(userName, pass));
+                                int phone = object.getInt("phone");
+                                AcceptorsList.add(new Users(userName, pass , phone));
                             }
 
                         } catch (JSONException e) {
@@ -135,7 +142,7 @@ public class LoginActivity extends AppCompatActivity {
                 {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.d("Error.Response", error.getMessage());
+                        //  Log.d("Error.Response", error.getMessage());
                         Toast.makeText(LoginActivity.this,"Connection Error Acceptors",Toast.LENGTH_LONG).show();
 
                     }

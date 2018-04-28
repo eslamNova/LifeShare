@@ -25,12 +25,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class UserActivity extends AppCompatActivity {
-    final  String deleteURL = "Edite this";
+    final  String deleteURL = "http://192.168.1.2/ls2/delReq/";
     final  String addURL = "http://192.168.1.2/ls2/request/";
     final  String url_H = "http://192.168.1.2/ls2/hospitals/";
     private String url;
+    private String address;
     private RequestQueue requestQueue ;
-    private ArrayList<Hospitals> HospitalsList;
+    private ArrayList<Hospitals> HospitalsList = new ArrayList<>();
     private Hospitals currentHospital ;
 
     private EditText hos,blood;
@@ -58,11 +59,13 @@ public class UserActivity extends AppCompatActivity {
                     currentHospital = HospitalsList.get(i);
                     if (currentHospital.getName().contentEquals(hos.getText())) {
 
+                        address = currentHospital.getAddress();
                         url = addURL;
                         deleteaddrequest();
                         add.setEnabled(false);
                         hos.setEnabled(false);
                         blood.setEnabled(false);
+                        break;
                     }
                     else{
                         Toast.makeText(UserActivity.this,"Hospital not found ",Toast.LENGTH_LONG).show();
@@ -88,9 +91,10 @@ public class UserActivity extends AppCompatActivity {
         final String hospital, userName, bloodType ;
         userName = getIntent().getStringExtra("userName");
         EditText hospitalE = (EditText) findViewById(R.id.hos);
-        EditText bloodTypeE = (EditText) findViewById(R.id.blood);
+        EditText bloodTypeE = (EditText) findViewById(R.id.b);
         hospital = hospitalE.getText().toString();
         bloodType = bloodTypeE.getText().toString();
+
         if(hospital.isEmpty()||bloodType.isEmpty()) return;
 
         StringRequest postRequest = new StringRequest(Request.Method.POST, url,
@@ -118,8 +122,8 @@ public class UserActivity extends AppCompatActivity {
                 {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.d("Error.Response", error.getMessage());
-                        Toast.makeText(UserActivity.this,"Connection Error",Toast.LENGTH_LONG).show();
+                        // Log.d("Error.Response", error.getMessage());
+                        Toast.makeText(UserActivity.this,"Connection Error HEEEEREE",Toast.LENGTH_LONG).show();
 
                     }
                 }
@@ -128,9 +132,12 @@ public class UserActivity extends AppCompatActivity {
             protected Map<String, String> getParams()
             {
                 Map<String, String>  params = new HashMap<String, String>();
-                params.put("hospitalName", hospital);
                 params.put("userName", userName);
+                params.put("hospitalName", hospital);
+                params.put("address",address);
                 params.put("bloodType", bloodType);
+
+
 
                 return params;
             }
@@ -164,8 +171,8 @@ public class UserActivity extends AppCompatActivity {
                 {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.d("Error.Response", error.getMessage());
-                        Toast.makeText(UserActivity.this,"Connection Error",Toast.LENGTH_LONG).show();
+                        //Log.d("Error.Response", error.getMessage());
+                        Toast.makeText(UserActivity.this,"Connection Error Hospitals",Toast.LENGTH_LONG).show();
 
                     }
                 }

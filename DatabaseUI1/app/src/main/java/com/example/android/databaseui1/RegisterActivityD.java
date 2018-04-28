@@ -39,12 +39,12 @@ public class RegisterActivityD extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                    addUser(view);
-                    Intent registerIntent = new Intent(view.getContext(), RequistesActivity.class);
-                    startActivity(registerIntent);
-                }
-            });
-        }
+                addUser(view);
+                Intent registerIntent = new Intent(view.getContext(), RequistesActivity.class);
+                startActivity(registerIntent);
+            }
+        });
+    }
 
 
     public void addUser(View v){
@@ -88,7 +88,7 @@ public class RegisterActivityD extends AppCompatActivity {
                 {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.d("Error.Response", error.getMessage());
+                        //Log.d("Error.Response", error.getMessage());
                         Toast.makeText(RegisterActivityD.this,"Connection Error Can't add Donner",Toast.LENGTH_LONG).show();
 
                     }
