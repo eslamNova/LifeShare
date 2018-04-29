@@ -29,7 +29,6 @@ public class UserActivity extends AppCompatActivity {
     final  String addURL = "http://192.168.1.2/ls2/request/";
     final  String url_H = "http://192.168.1.2/ls2/hospitals/";
     private String url;
-    private String address;
     private RequestQueue requestQueue ;
     private ArrayList<Hospitals> HospitalsList = new ArrayList<>();
     private Hospitals currentHospital ;
@@ -42,9 +41,6 @@ public class UserActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user);
         requestQueue = Volley.newRequestQueue(UserActivity.this);
 
-
-        getAllHospitals();
-
         add = (Button) findViewById(R.id.add);
         remove = (Button) findViewById(R.id.remove);
         hos = (EditText) findViewById(R.id.hos);
@@ -55,11 +51,11 @@ public class UserActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
+                getAllHospitals();
                 for (int i=0;i< HospitalsList.size() ;i++){
                     currentHospital = HospitalsList.get(i);
                     if (currentHospital.getName().contentEquals(hos.getText())) {
 
-                        address = currentHospital.getAddress();
                         url = addURL;
                         deleteaddrequest();
                         add.setEnabled(false);
@@ -94,7 +90,6 @@ public class UserActivity extends AppCompatActivity {
         EditText bloodTypeE = (EditText) findViewById(R.id.b);
         hospital = hospitalE.getText().toString();
         bloodType = bloodTypeE.getText().toString();
-
         if(hospital.isEmpty()||bloodType.isEmpty()) return;
 
         StringRequest postRequest = new StringRequest(Request.Method.POST, url,
@@ -106,14 +101,14 @@ public class UserActivity extends AppCompatActivity {
                             JSONObject jsonObject = new JSONObject(response) ;
                             String status_message = jsonObject.getString("status_message") ;
                             if(status_message.equals("ok")){
-                                Toast.makeText(UserActivity.this,"Request Added Successfully",Toast.LENGTH_LONG).show();
+                                Toast.makeText(UserActivity.this,"Successfully",Toast.LENGTH_LONG).show();
                             }
                             else {
-                                Toast.makeText(UserActivity.this,"Error Adding Request",Toast.LENGTH_LONG).show();
+                                Toast.makeText(UserActivity.this,"Error",Toast.LENGTH_LONG).show();
 
                             }
                         } catch (JSONException e) {
-                            Toast.makeText(UserActivity.this,"Error Adding Request",Toast.LENGTH_LONG).show();
+                            Toast.makeText(UserActivity.this,"Error",Toast.LENGTH_LONG).show();
                             e.printStackTrace();
                         }
                     }
@@ -123,7 +118,7 @@ public class UserActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // Log.d("Error.Response", error.getMessage());
-                        Toast.makeText(UserActivity.this,"Connection Error HEEEEREE",Toast.LENGTH_LONG).show();
+                        Toast.makeText(UserActivity.this,"Connection Error",Toast.LENGTH_LONG).show();
 
                     }
                 }
@@ -132,12 +127,10 @@ public class UserActivity extends AppCompatActivity {
             protected Map<String, String> getParams()
             {
                 Map<String, String>  params = new HashMap<String, String>();
-                params.put("userName", userName);
                 params.put("hospitalName", hospital);
-                params.put("address",address);
+                params.put("address", currentHospital.getAddress());
+                params.put("userNameA", userName);
                 params.put("bloodType", bloodType);
-
-
 
                 return params;
             }
@@ -172,7 +165,7 @@ public class UserActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         //Log.d("Error.Response", error.getMessage());
-                        Toast.makeText(UserActivity.this,"Connection Error Hospitals",Toast.LENGTH_LONG).show();
+                        Toast.makeText(UserActivity.this,"Connection Error",Toast.LENGTH_LONG).show();
 
                     }
                 }

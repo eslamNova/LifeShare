@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.Toast;
 
@@ -21,6 +22,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class RequistesActivity extends AppCompatActivity {
     private ArrayList<Request> requestList;
@@ -28,6 +31,7 @@ public class RequistesActivity extends AppCompatActivity {
     private RequestQueue requestQueue ;
     private Request currentreq;
     final  String url = "http://192.168.1.2/ls2/request/";
+    final String urlPost = "http://192.168.1.2/ls2/registerDonner/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +48,7 @@ public class RequistesActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 currentreq = requestList.get(position);
+                postUserName(currentreq.getUserName());
                 String tel = "tel:";
                 tel = tel + currentreq.getPhoneNumber();
                 Uri number = Uri.parse(tel);
@@ -65,7 +70,7 @@ public class RequistesActivity extends AppCompatActivity {
                             JSONArray jsonArray = jsonObject.getJSONArray("data") ;
                             for(int i=0 ;i<jsonArray.length() ;i++){
                                 JSONObject object = jsonArray.getJSONObject(i);
-                                String userName = object.getString("userName") ;
+                                String userName = object.getString("userNameA") ;
                                 String hospitalName = object.getString("hospitalName") ;
                                 String hospitalAddress = object.getString("address");
                                 String bloodType = object.getString("bloodType");
@@ -88,6 +93,56 @@ public class RequistesActivity extends AppCompatActivity {
                     }
                 }
         );
+        requestQueue.add(postRequest);
+    }
+
+    public void postUserName(final String userNameA){
+        final String userNameD;
+        userNameD = getIntent().getStringExtra("userName");
+
+        if(userNameD.isEmpty()) return;
+
+        StringRequest postRequest = new StringRequest(com.android.volley.Request.Method.POST, urlPost,
+                new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response) ;
+                            String status_message = jsonObject.getString("status_message") ;
+                            if(status_message.equals("ok")){
+                                Toast.makeText(RequistesActivity.this,"Successfully",Toast.LENGTH_LONG).show();
+                            }
+                            else {
+                                Toast.makeText(RequistesActivity.this,"Error",Toast.LENGTH_LONG).show();
+
+                            }
+                        } catch (JSONException e) {
+                            Toast.makeText(RequistesActivity.this,"Error",Toast.LENGTH_LONG).show();
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // Log.d("Error.Response", error.getMessage());
+                        Toast.makeText(RequistesActivity.this,"Connection Error",Toast.LENGTH_LONG).show();
+
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams()
+            {
+                Map<String, String>  params = new HashMap<String, String>();
+                params.put("userNameD", userNameD);
+                params.put("userNameA", userNameA);
+
+                return params;
+            }
+        };
         requestQueue.add(postRequest);
     }
 }

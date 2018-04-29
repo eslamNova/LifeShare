@@ -26,9 +26,13 @@ import java.util.Map;
 
 public class RegisterActivityA extends AppCompatActivity {
     final  String url = "http://192.168.1.2/ls2/acceptor/";
-    RequestQueue requestQueue ;
+    private RequestQueue requestQueue ;
 
-
+    private EditText nameE ;
+    private EditText userNameE ;
+    private EditText passE ;
+    private EditText emailE ;
+    private EditText phoneE ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,14 +42,24 @@ public class RegisterActivityA extends AppCompatActivity {
 
         Button register = (Button) findViewById(R.id.register);
 
+        nameE = (EditText) findViewById(R.id.name);
+        userNameE = (EditText) findViewById(R.id.userNameR);
+        passE = (EditText) findViewById(R.id.passR);
+        emailE = (EditText) findViewById(R.id.emailR);
+        phoneE = (EditText) findViewById(R.id.phone);
 
         register.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View view) {
-                addUser();
-                Intent registerIntent = new Intent(view.getContext(), UserActivity.class);
-                startActivity(registerIntent);
+                if (userNameE.getText().toString().isEmpty()||passE.getText().toString().isEmpty()||phoneE.getText().toString().isEmpty())
+                    Toast.makeText(RegisterActivityA.this,"Missing fields",Toast.LENGTH_LONG).show();
+                else {
+                    addUser();
+                    Intent registerIntent = new Intent(view.getContext(), UserActivity.class);
+                    registerIntent.putExtra("userName", ((EditText)findViewById(R.id.userNameR)).getText());
+                    startActivity(registerIntent);
+                }
             }
         });
     }
@@ -53,12 +67,6 @@ public class RegisterActivityA extends AppCompatActivity {
 
     public void addUser(){
         final String name, userName,email, password, phone ;
-
-        EditText nameE = (EditText) findViewById(R.id.name);
-        EditText userNameE = (EditText) findViewById(R.id.userNameR);
-        EditText passE = (EditText) findViewById(R.id.passR);
-        EditText emailE = (EditText) findViewById(R.id.emailR);
-        EditText phoneE = (EditText) findViewById(R.id.phone);
 
         name = nameE.getText().toString();
         userName = userNameE.getText().toString();
@@ -101,9 +109,9 @@ public class RegisterActivityA extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams()
             {
-                Map<String, String>  params = new HashMap<String, String>();
+                Map<String, String>  params = new HashMap   <String, String>();
                 params.put("name", name);
-                params.put("userName", userName);
+                params.put("userNameA", userName);
                 params.put("email", email);
                 params.put("password", password);
                 params.put("phone", phone);

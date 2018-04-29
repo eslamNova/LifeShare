@@ -48,33 +48,30 @@ public class LoginActivity extends AppCompatActivity {
                 EditText userName = (EditText) findViewById(R.id.userNameLO);
                 EditText pass = (EditText) findViewById(R.id.passLO);
                 flag=0;
+                Intent reqView = new Intent(view.getContext(), MainActivity.class);
                 for (int i=0;i<DonnersList.size();i++){
                     currentUser = DonnersList.get(i);
                     if (currentUser.getUserName().contentEquals(userName.getText()) && currentUser.getPassword().contentEquals(pass.getText())) {
                         flag=1;
-                        Intent reqView = new Intent(view.getContext(), RequistesActivity.class);
+                        reqView = new Intent(view.getContext(), RequistesActivity.class);
                         reqView.putExtra("userName", currentUser.getUserName());
-                        startActivity(reqView);
                         break;
-
-                    }
-                    else{
-                        Toast.makeText(LoginActivity.this,"Wrong user name or password",Toast.LENGTH_LONG).show();
                     }
                 }
                 if (flag==0) {
                     for (int i = 0; i < AcceptorsList.size(); i++) {
                         currentUser = AcceptorsList.get(i);
                         if (currentUser.getUserName().contentEquals(userName.getText()) && currentUser.getPassword().contentEquals(pass.getText())) {
-                            Intent reqView = new Intent(view.getContext(), UserActivity.class);
+                            reqView = new Intent(view.getContext(), UserActivity.class);
                             reqView.putExtra("userName", currentUser.getUserName());
-                            startActivity(reqView);
                             break;
-                        } else {
-                            Toast.makeText(LoginActivity.this, "Wrong user name or password", Toast.LENGTH_LONG).show();
                         }
+                        else if (i==AcceptorsList.size()-1) Toast.makeText(LoginActivity.this,"Wrong user name or password",Toast.LENGTH_LONG).show();
                     }
                 }
+                userName.setText("");
+                pass.setText("");
+                startActivity(reqView);
             }
         });
 
@@ -90,14 +87,13 @@ public class LoginActivity extends AppCompatActivity {
                             JSONArray jsonArray = jsonObject.getJSONArray("data") ;
                             for(int i=0 ;i<jsonArray.length() ;i++){
                                 JSONObject object = jsonArray.getJSONObject(i);
-                                String userName = object.getString("userName") ;
+                                String userName = object.getString("userNameD") ;
                                 String pass = object.getString("password") ;
-                                int phone = object.getInt("phone");
-                                DonnersList.add(new Users(userName, pass,phone));
+                                DonnersList.add(new Users(userName, pass));
                             }
 
                         } catch (JSONException e) {
-                            Toast.makeText(LoginActivity.this,"Error Getting User",Toast.LENGTH_LONG).show();
+                            Toast.makeText(LoginActivity.this,"Error Getting User 77",Toast.LENGTH_LONG).show();
                             e.printStackTrace();
                         }
                     }
@@ -126,10 +122,9 @@ public class LoginActivity extends AppCompatActivity {
                             JSONArray jsonArray = jsonObject.getJSONArray("data") ;
                             for(int i=0 ;i<jsonArray.length() ;i++){
                                 JSONObject object = jsonArray.getJSONObject(i);
-                                String userName = object.getString("userName") ;
+                                String userName = object.getString("userNameA") ;
                                 String pass = object.getString("password") ;
-                                int phone = object.getInt("phone");
-                                AcceptorsList.add(new Users(userName, pass , phone));
+                                AcceptorsList.add(new Users(userName, pass));
                             }
 
                         } catch (JSONException e) {

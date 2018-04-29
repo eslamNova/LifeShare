@@ -1,7 +1,7 @@
 package com.example.android.databaseui1;
 
 public class Request {
-    private String userName, hospitalName,hospitalAddress, bloodType, phoneNumber;
+    private String hospitalName, bloodType, userName, hospitalAddress, phoneNumber;
 
     public Request(String hospitalName, String bloodType, String userName, String hospitalAddress, String phoneNumber) {
         this.hospitalName = hospitalName;
