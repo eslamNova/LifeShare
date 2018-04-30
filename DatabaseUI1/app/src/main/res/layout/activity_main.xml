@@ -4,34 +4,95 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/main"
     tools:context="com.example.android.databaseui1.MainActivity">
 
-    <Button
-        android:id="@+id/regDonner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/regDon"
-        app:layout_constraintBottom_toTopOf="@+id/regAcceptor"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
-        android:id="@+id/regAcceptor"
-        android:layout_width="wrap_content"
+    <TextView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/regAcc"
-        app:layout_constraintBottom_toTopOf="@+id/login"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:text="Life Share 1.2"
+        android:textAlignment="center"
+        android:textColor="@android:color/white"
+        android:textSize="40dp" />
 
-    <Button
-        android:id="@+id/login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/login"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:weightSum="3">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@android:color/white"
+                />
+            <Button
+                android:id="@+id/regDonner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/regDon"
+                android:layout_weight="1"
+                android:background="@color/donnerB"
+                android:textColor="@android:color/white"
+                app:layout_constraintBottom_toTopOf="@+id/regAcceptor"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@android:color/white"
+                />
+
+            <Button
+                android:id="@+id/regAcceptor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/regAcc"
+                android:layout_weight="1"
+                android:background="@color/acceptorB"
+                android:textColor="@android:color/white"
+                app:layout_constraintBottom_toTopOf="@+id/login"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@android:color/white"
+                />
+
+            <Button
+                android:id="@+id/login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/login"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:textColor="@android:color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@android:color/white"
+                />
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
 
 </android.support.constraint.ConstraintLayout>
